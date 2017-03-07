@@ -1,27 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:background="@color/colorGreyLight">
 
         <TextView
-            android:text="Point"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:id="@+id/txt_Username"
+            android:textAlignment="center"
+            android:textStyle="normal|bold"
+            android:layout_weight="0.14" />
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:layout_weight="1"
+            android:id="@+id/txt_Point"
+            android:layout_weight="0.25"
             android:textAlignment="center" />
 
-        <TextView
-            android:text="Username"
+        <Button
+            android:text="Vue générale"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/textView"
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_VueGenerale"
+            android:layout_weight="0.06"
+            android:background="@color/colorGreyDark"
+            android:textColor="@color/colorWithe"
+            android:layout_marginBottom="5px"/>
+
+        <Button
+            android:text="Bâtiment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_Batiment"
+            android:background="@color/colorGreyDark"
+            android:textColor="@color/colorWithe"
+            android:layout_marginBottom="5px"/>
+
+        <Button
+            android:text="Flotte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_Flotte"
+            android:background="@color/colorGreyDark"
+            android:textColor="@color/colorWithe"
+            android:layout_marginBottom="5px"/>
+
+        <Button
+            android:text="Recherches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_Recherche"
+            android:background="@color/colorGreyDark"
+            android:textColor="@color/colorWithe"
+            android:layout_marginBottom="5px"/>
+
+        <Button
+            android:text="Chantier Spatial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_ChantierSpa"
+            android:background="@color/colorGreyDark"
+            android:textColor="@color/colorWithe"
+            android:layout_marginBottom="5px"/>
+
+        <Button
+            android:text="Galaxie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_Galaxie"
+            android:background="@color/colorGreyDark"
+            android:textColor="@color/colorWithe"
+            android:layout_marginBottom="5px"/>
+
+        <Button
+            android:text="Logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_Logout"
+            android:layout_weight="0.14"
+            android:background="@color/colorGreyDark"
+            android:textColor="@color/colorWithe"
+            android:layout_marginBottom="5px"/>
+
     </LinearLayout>
+
 </LinearLayout>

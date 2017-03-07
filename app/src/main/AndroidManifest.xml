@@ -23,6 +23,14 @@
             android:name="mathieu.com.outerspacemanager.outerspacemanager.MainActivity"
             android:label="@string/app_name">
         </activity>
+        <activity
+            android:name="mathieu.com.outerspacemanager.outerspacemanager.BuildingActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name="mathieu.com.outerspacemanager.outerspacemanager.ConnectActivity"
+            android:label="@string/app_name">
+        </activity>
     </application>
 
 </manifest>

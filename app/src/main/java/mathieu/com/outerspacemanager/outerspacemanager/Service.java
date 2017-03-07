@@ -1,19 +1,41 @@
 package mathieu.com.outerspacemanager.outerspacemanager;
 
-import java.util.List;
-
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Building;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Buildings;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * Created by Piou on 06/03/2017.
  */
 
 public interface Service {
+    //Inscription
     @POST("/api/v1/auth/create")
     Call<User> createUserAccount(@Body User user);
+
+    //Connection
+    @POST("api/v1/auth/login")
+    Call<User> toConnect(@Body User user);
+
+    //Recupère données de l'utilisateur
+    @GET("/api/v1/users/get")
+    Call<User> getUserAccount(@Header("x-access-token") String token);
+
+    //Recupère les buildings de l'user
+    @GET("/api/v1/buildings/list")
+    Call<Buildings> getBuildings(@Header("x-access-token") String token);
+
+    //Construction des bâtiments
+    @POST("api/v1/buildings/create/{buildingId}")
+    Call<Building> constructBuilding(@Header("x-access-token") String token, @Path("buildingId") int buildingId);
+
+
+
+
 }

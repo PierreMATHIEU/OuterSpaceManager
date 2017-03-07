@@ -1,4 +1,4 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.classObjet;
 
 import android.widget.Button;
 
@@ -11,6 +11,7 @@ public class User {
     private String username;
     private String password;
     private String token;
+    private Integer points;
 
     public User(String username, String password){
         this.username = username;
@@ -18,10 +19,9 @@ public class User {
         this.token = token;
     }
 
-    public String getIdentifiant(){
+    public String getUsername(){
         return this.username;
     }
-    public String getToken(){
-        return this.token;
-    }
+    public String getToken(){ return this.token; }
+    public String getPoints(){ return this.points.toString(); }
 }
