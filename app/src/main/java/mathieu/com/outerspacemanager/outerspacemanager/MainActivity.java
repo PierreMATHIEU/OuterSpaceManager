@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +34,8 @@ public class MainActivity extends Activity {
     private Button btn_ChantierSpa;
     private Button btn_Galaxie;
     private Button btn_Logout;
+    private TextView gas;
+    private TextView minerals;
 
     public static final String PREFS_TOKEN = "token";
     private Retrofit retrofit;
@@ -44,6 +48,8 @@ public class MainActivity extends Activity {
 
         username = (TextView)findViewById(R.id.txt_Username);
         points = (TextView)findViewById(R.id.txt_Point);
+        gas = (TextView)findViewById(R.id.txt_gas);
+        minerals = (TextView)findViewById(R.id.txt_minerals);
 
         btn_VueGenerale =(Button)findViewById(R.id.btn_VueGenerale);
         btn_Batiment = (Button)findViewById(R.id.btn_Batiment);
@@ -70,8 +76,14 @@ public class MainActivity extends Activity {
             //Réponce OK -> Récupère le username et points
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                username.setText(response.body().getUsername());
-                points.setText("Points : " + response.body().getPoints() );
+                if (response.isSuccessful()) {
+                    username.setText(response.body().getUsername());
+                    points.setText("Points : " + response.body().getPoints());
+                    gas.setText("Gas : " + response.body().getGas());
+                    minerals.setText("Minerals : " + response.body().getMinerals());
+                }else{
+                    Toast.makeText(getApplicationContext(), String.format("Erreur lors de la récupération"), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -103,6 +115,28 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent IntentBuildingActivity = new Intent(getApplicationContext(), BuildingActivity.class);
+                startActivity(IntentBuildingActivity);
+            }
+        });
+
+        btn_Galaxie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent IntentBuildingActivity = new Intent(getApplicationContext(), GalaxieActivity.class);
+                startActivity(IntentBuildingActivity);
+            }
+        });
+        btn_VueGenerale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent IntentBuildingActivity = new Intent(getApplicationContext(), GeneraleActivity.class);
+                startActivity(IntentBuildingActivity);
+            }
+        });
+        btn_Flotte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent IntentBuildingActivity = new Intent(getApplicationContext(), FlotteActivity.class);
                 startActivity(IntentBuildingActivity);
             }
         });

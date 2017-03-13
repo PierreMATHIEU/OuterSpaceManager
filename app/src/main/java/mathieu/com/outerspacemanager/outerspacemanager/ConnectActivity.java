@@ -45,7 +45,7 @@ public class ConnectActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                user = new User(username.getText().toString(), password.getText().toString());
+                user = new User(username.getText().toString(), password.getText().toString(), 0.00,0.00);
 
                 retrofit = new Retrofit.Builder()
                         .baseUrl("https://outer-space-manager.herokuapp.com")

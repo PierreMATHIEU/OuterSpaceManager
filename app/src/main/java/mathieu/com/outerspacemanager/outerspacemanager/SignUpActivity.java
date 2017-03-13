@@ -56,7 +56,7 @@ public class SignUpActivity extends Activity {
 
         btnValider.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                user = new User(etIdentifiant.getText().toString(),etPassword.getText().toString());
+                user = new User(etIdentifiant.getText().toString(),etPassword.getText().toString(), 0.00,0.00);
                 retrofit = new Retrofit.Builder()
                         .baseUrl("https://outer-space-manager.herokuapp.com")
                         .addConverterFactory(GsonConverterFactory.create())
