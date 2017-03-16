@@ -66,4 +66,5 @@ public class Building  {
         int res = mineralCostLevel0 + (level * mineralCostByLevel);
         return res;
     }
+    public boolean getIsBuilding(){return this.building;}
 }

@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
-        android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
+        android:id="@+id/txt_FlotteName"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_FlotteAmount"
+        android:textStyle="normal|italic"
         android:textAlignment="center" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="106dp">
+        android:layout_height="50dp">
 
         <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/textView3"
+            android:id="@+id/txt_FlotteMaxAttack"
             android:layout_weight="1"
             android:textAlignment="center" />
 
         <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/textView2"
+            android:id="@+id/txt_FlotteMinAttack"
             android:layout_weight="1"
             android:textAlignment="center" />
     </LinearLayout>
@@ -35,22 +42,27 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="119dp">
+        android:layout_height="50dp">
 
         <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/textView5"
+            android:id="@+id/txt_FlotteLife"
             android:layout_weight="1"
             android:textAlignment="center" />
 
         <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/textView4"
+            android:id="@+id/txt_FlotteShield"
             android:layout_weight="1"
             android:textAlignment="center" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_FlotteSpeed"
+        android:textAlignment="center" />
+
 </LinearLayout>

@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/layout_Building">
+        android:id="@+id/layout_Recherche">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_BuildingName"
+            android:id="@+id/txt_RechercheName"
             android:layout_weight="0.16"
             android:textAlignment="center" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_BuildingLvl"
+            android:id="@+id/txt_RechercheLvl"
             android:layout_weight="0.20"
             android:textAlignment="center" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_BuildingEffect"
+            android:id="@+id/txt_RechercheEffect"
             android:layout_weight="0.21"
             android:textAlignment="center" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_BuildingAmountEffect"
+            android:id="@+id/txt_RechercheAmountEffect"
             android:layout_weight="0.16"
             android:textAlignment="center" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_BuildingTime"
+            android:id="@+id/txt_RechercheTime"
             android:layout_weight="0.16"
             android:textAlignment="center" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_BuildingGazCost"
+            android:id="@+id/txt_RechercheGazCost"
             android:layout_weight="0.16"
             android:textAlignment="center" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_Building_MineralCost"
+            android:id="@+id/txt_RechercheMineralCost"
             android:layout_weight="0.16"
             android:textAlignment="center" />
 

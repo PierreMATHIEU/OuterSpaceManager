@@ -5,19 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
+import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static mathieu.com.outerspacemanager.outerspacemanager.R.id.swiperefresh;
 
 /**
  * Created by Piou on 06/03/2017.
@@ -36,6 +38,7 @@ public class MainActivity extends Activity {
     private Button btn_Logout;
     private TextView gas;
     private TextView minerals;
+    private SwipeRefreshLayout swiperefresh;
 
     public static final String PREFS_TOKEN = "token";
     private Retrofit retrofit;
@@ -58,6 +61,7 @@ public class MainActivity extends Activity {
         btn_ChantierSpa = (Button)findViewById(R.id.btn_ChantierSpa);
         btn_Galaxie = (Button)findViewById(R.id.btn_Galaxie);
         btn_Logout = (Button)findViewById(R.id.btn_Logout);
+        swiperefresh = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
 
         //Token
         SharedPreferences settings = getSharedPreferences(PREFS_TOKEN, 0);
@@ -76,6 +80,7 @@ public class MainActivity extends Activity {
             //Réponce OK -> Récupère le username et points
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                swiperefresh.setRefreshing(false);
                 if (response.isSuccessful()) {
                     username.setText(response.body().getUsername());
                     points.setText("Points : " + response.body().getPoints());
@@ -137,6 +142,20 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent IntentBuildingActivity = new Intent(getApplicationContext(), FlotteActivity.class);
+                startActivity(IntentBuildingActivity);
+            }
+        });
+        btn_ChantierSpa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent IntentBuildingActivity = new Intent(getApplicationContext(), ChantierSpatialActivity.class);
+                startActivity(IntentBuildingActivity);
+            }
+        });
+        btn_Recherche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent IntentBuildingActivity = new Intent(getApplicationContext(), RechercheActivity.class);
                 startActivity(IntentBuildingActivity);
             }
         });

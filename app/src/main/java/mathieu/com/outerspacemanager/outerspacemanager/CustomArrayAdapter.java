@@ -1,11 +1,13 @@
 package mathieu.com.outerspacemanager.outerspacemanager;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.ArrayAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,6 +35,11 @@ public class CustomArrayAdapter extends ArrayAdapter<Building> {
         View rowView = inflater.inflate(R.layout.custom_arrayadapter, parent, false);
 
         myBuilding = values.get(position);
+
+        if( myBuilding.getIsBuilding() == true){
+            LinearLayout layout_Building = (LinearLayout)rowView.findViewById(R.id.layout_Building);
+            layout_Building.setBackgroundColor(Color.GRAY);
+        }
 
         TextView building_name = (TextView) rowView.findViewById(R.id.txt_BuildingName);
         TextView textViewLvl = (TextView) rowView.findViewById(R.id.txt_BuildingLvl);

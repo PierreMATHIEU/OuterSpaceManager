@@ -11,7 +11,7 @@ public class User {
     private String username;
     private String password;
     private String token;
-    private Integer points;
+    private Double points;
     private Double gas;
     private Double minerals;
     private Integer gasModifier;

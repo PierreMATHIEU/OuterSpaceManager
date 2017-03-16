@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Buildings;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
+import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,11 +64,11 @@ public class GeneraleActivity extends Activity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     username.setText(response.body().getUsername());
-                    points.setText(response.body().getPoints());
-                    gas.setText(response.body().getGas());
-                    gasMod.setText(response.body().getGasMod());
-                    minerals.setText(response.body().getMinerals());
-                    mineralsMod.setText(response.body().getMineralMod());
+                    points.setText("Points : " + response.body().getPoints());
+                    gas.setText("Gas : " + response.body().getGas());
+                    gasMod.setText("Gas mod : " + response.body().getGasMod());
+                    minerals.setText("Minerals : " + response.body().getMinerals());
+                    mineralsMod.setText("Mineral mod : " + response.body().getMineralMod());
                 }else{
                     Toast.makeText(getApplicationContext(), String.format("Erreur de récupération de l'utilisateur"), Toast.LENGTH_SHORT).show();
                 }
