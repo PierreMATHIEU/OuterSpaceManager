@@ -63,45 +63,14 @@ public class MainActivity extends Activity {
         btn_Logout = (Button)findViewById(R.id.btn_Logout);
         swiperefresh = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
 
-        //Token
-        SharedPreferences settings = getSharedPreferences(PREFS_TOKEN, 0);
-        String token = settings.getString(PREFS_TOKEN, new String());
-
-        // APPEL API
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://outer-space-manager.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Service service = retrofit.create(Service.class);
-        Call<User> request = service.getUserAccount(token);
-
-        request.enqueue(new Callback<User>(){
-
-            //Réponce OK -> Récupère le username et points
+        swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                swiperefresh.setRefreshing(false);
-                if (response.isSuccessful()) {
-                    username.setText(response.body().getUsername());
-                    points.setText("Points : " + response.body().getPoints());
-                    gas.setText("Gas : " + response.body().getGas());
-                    minerals.setText("Minerals : " + response.body().getMinerals());
-                }else{
-                    Toast.makeText(getApplicationContext(), String.format("Erreur lors de la récupération"), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Context context = getApplicationContext();
-                CharSequence text = "Erreur de connection !!! Noob !!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
+            public void onRefresh() {
+                showAll();
             }
         });
+
+        showAll();
 
         //Bouton pour se déconnecter
         btn_Logout.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +130,45 @@ public class MainActivity extends Activity {
         });
     }
 
+    public void showAll(){
+        //Token
+        SharedPreferences settings = getSharedPreferences(PREFS_TOKEN, 0);
+        String token = settings.getString(PREFS_TOKEN, new String());
+        // APPEL API
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://outer-space-manager.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Service service = retrofit.create(Service.class);
+        Call<User> request = service.getUserAccount(token);
 
+        request.enqueue(new Callback<User>(){
+
+            //Réponce OK -> Récupère le username et points
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                swiperefresh.setRefreshing(false);
+                if (response.isSuccessful()) {
+                    username.setText(response.body().getUsername());
+                    points.setText("Points : " + response.body().getPoints());
+                    gas.setText("Gas : " + response.body().getGas());
+                    minerals.setText("Minerals : " + response.body().getMinerals());
+                }else{
+                    Toast.makeText(getApplicationContext(), String.format("Erreur lors de la récupération"), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Context context = getApplicationContext();
+                CharSequence text = "Erreur de connection !!! Noob !!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
+        });
+    }
 }
 

@@ -13,11 +13,23 @@ public class Fleet {
     private Integer size;
     private ArrayList<Ship> ships;
 
-    public Fleet(Integer size, ArrayList<Ship> fleet) {
-        this.size = size;
-        this.ships = fleet;
+    public Fleet() {
+        this.ships = new ArrayList<Ship>();
     }
 
     public ArrayList<Ship> getShips(){ return this.ships;}
     public Integer getSize(){ return this.size;}
+
+    public Integer getNumberOfShip(){
+        Integer numberShip = 0;
+        for (Integer i = 0; i<this.getSize(); i++){
+            if(this.ships.get(i).getAmount() > 0){
+                numberShip += this.ships.get(i).getAmount();
+            }
+        }
+        return numberShip;
+    }
+    public void addShip(Ship ship){
+        this.ships.add(ship);
+    }
 }

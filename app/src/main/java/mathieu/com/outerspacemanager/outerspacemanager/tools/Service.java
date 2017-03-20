@@ -1,6 +1,7 @@
 package mathieu.com.outerspacemanager.outerspacemanager.tools;
 
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Amount;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.AttackResponse;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Building;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Buildings;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Fleet;
@@ -8,6 +9,7 @@ import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Galaxies;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Search;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Searches;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Ship;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.ShipsAttack;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -64,4 +66,14 @@ public interface Service {
     //Créé les vaisseaux
     @POST("api/v1/ships/create/{shipId}")
     Call<Ship> createShips(@Header("x-access-token") String token, @Path("shipId") int shipId, @Body Amount amount);
+
+    //Attacks a user
+    @POST("api/v1/fleet/attack/{userName}")
+    Call<AttackResponse> attackUser(@Header("x-access-token") String token, @Path("userName") String userName, @Body Fleet ships);
+
+
+    //Recupère les reports
+    @GET("/api/v1/ships")
+    Call<Fleet> getReports(@Header("x-access-token") String token);
+
 }

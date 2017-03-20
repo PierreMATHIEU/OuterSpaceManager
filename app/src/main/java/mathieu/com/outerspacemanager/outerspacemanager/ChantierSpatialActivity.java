@@ -110,7 +110,7 @@ public class ChantierSpatialActivity extends AppCompatActivity implements OnShip
     public void createShipsManager(){
         new AlertDialog.Builder(this)
                 .setTitle("Créer")
-                .setMessage("Améliorer "+ theShip.getName() + " ?")
+                .setMessage("Créer le vaisseau "+ theShip.getName() + " ?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 

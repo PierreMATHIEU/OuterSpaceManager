@@ -20,28 +20,22 @@ public class Ship {
     private Integer spatioportLevelNeeded;
 
 
-    public Ship(Integer shipId, String name) {
-        this.shipId = shipId;
-        this.name = name;
-        this.mineralCost = mineralCost;
-        this.life = life;
-        this.shield = shield;
-        this.maxAttack = maxAttack;
-        this.minAttack = minAttack;
-        this.speed = speed;
-        this.gasCost = gasCost;
+    public Ship(int id, int amount){
+        this.shipId = id;
+        this.amount = amount;
     }
+
     public Integer getShipId(){ return this.shipId;}
     public Integer getAmount(){ return this.amount;}
     public String getName(){ return this.name;}
-    public String getLife(){ return this.life.toString();}
-    public String getShield(){ return this.shield.toString();}
-    public String getMaxAttack(){ return this.maxAttack.toString();}
-    public String getMinAttack(){ return this.minAttack.toString();}
-    public String getSpeed(){ return this.speed.toString();}
-    public String getGasCost(){ return this.gasCost.toString();}
-    public String getMineralCost(){ return this.mineralCost.toString();}
-    public String getTimeBuild(){ return this.timeToBuild.toString();}
-    public String getSpatioport(){ return this.spatioportLevelNeeded.toString();}
+    public Integer getLife(){ return this.life;}
+    public Integer getShield(){ return this.shield;}
+    public Integer getMaxAttack(){ return this.maxAttack;}
+    public Integer getMinAttack(){ return this.minAttack;}
+    public Integer getSpeed(){ return this.speed;}
+    public Integer getGasCost(){ return this.gasCost;}
+    public Integer getMineralCost(){ return this.mineralCost;}
+    public Integer getTimeBuild(){ return this.timeToBuild;}
+    public Integer getSpatioport(){ return this.spatioportLevelNeeded;}
 }
 

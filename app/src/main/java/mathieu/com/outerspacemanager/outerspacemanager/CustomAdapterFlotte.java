@@ -2,15 +2,20 @@ package mathieu.com.outerspacemanager.outerspacemanager;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Ship;
+import mathieu.com.outerspacemanager.outerspacemanager.tools.OnAttackClickListener;
+import mathieu.com.outerspacemanager.outerspacemanager.tools.OnItemClickListener;
 
 /**
  * Created by Piou on 13/03/2017.
@@ -20,6 +25,13 @@ public class CustomAdapterFlotte extends RecyclerView.Adapter<CustomAdapterFlott
 
     private final ArrayList<Ship> values;
     private final Context context;
+    //Interface
+    private OnAttackClickListener myAttackListener;
+
+    //set l'activité
+    public void setMyAttackListener(OnAttackClickListener myAttackListener) {
+        this.myAttackListener = myAttackListener;
+    }
 
     public CustomAdapterFlotte(ArrayList<Ship> values, Context context) {
         this.values = values;
@@ -37,15 +49,32 @@ public class CustomAdapterFlotte extends RecyclerView.Adapter<CustomAdapterFlott
 
     //Remplire les vues
     @Override
-    public void onBindViewHolder(CustomAdapterFlotte.FlotteViewHolder holder, int position) {
-        Ship ship = values.get(position);
-        holder.txt_FlotteName.setText(ship.getName());
+    public void onBindViewHolder(final CustomAdapterFlotte.FlotteViewHolder holder, final int position) {
+        final Ship ship = values.get(position);
+
+        holder.txt_FlotteName.setText(ship.getName().toString());
         holder.txt_FlotteAmount.setText("Nombre : " + ship.getAmount().toString());
-        holder.txt_FlotteMaxAtt.setText("Max attack : " + ship.getMaxAttack());
-        holder.txt_FlotteMinAtt.setText("Min attack : " + ship.getMinAttack());
-        holder.txt_FlotteLife.setText("Life : " + ship.getLife());
-        holder.txt_FlotteShield.setText("Shield : " + ship.getShield());
-        holder.txt_FlotteSpeed.setText("Speed : " + ship.getSpeed());
+        holder.txt_FlotteMaxAtt.setText("Max attack : " + ship.getMaxAttack().toString());
+        holder.txt_FlotteMinAtt.setText("Min attack : " + ship.getMinAttack().toString());
+        holder.txt_FlotteLife.setText("Life : " + ship.getLife().toString());
+        holder.txt_FlotteShield.setText("Shield : " + ship.getShield().toString());
+        holder.txt_FlotteSpeed.setText("Speed : " + ship.getSpeed().toString());
+        holder.edit_FlotteAttack.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                myAttackListener.onAttackClickListener(ship.getShipId(), Integer.parseInt(s.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -65,6 +94,7 @@ public class CustomAdapterFlotte extends RecyclerView.Adapter<CustomAdapterFlott
         private TextView txt_FlotteSpeed;
         private TextView txt_FlotteStation;
         private TextView txt_FlotteTimeToBuild;
+        private EditText edit_FlotteAttack;
 
         public FlotteViewHolder(View itemView) {
             super(itemView);
@@ -75,6 +105,8 @@ public class CustomAdapterFlotte extends RecyclerView.Adapter<CustomAdapterFlott
             txt_FlotteLife = (TextView) itemView.findViewById(R.id.txt_FlotteLife);
             txt_FlotteShield = (TextView) itemView.findViewById(R.id.txt_FlotteShield);
             txt_FlotteSpeed = (TextView) itemView.findViewById(R.id.txt_FlotteSpeed);
+            edit_FlotteAttack = (EditText) itemView.findViewById(R.id.et_FlotteAttack);
         }
     }
+
 }
