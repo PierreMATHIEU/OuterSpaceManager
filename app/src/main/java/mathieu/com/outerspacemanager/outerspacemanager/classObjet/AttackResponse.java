@@ -9,6 +9,7 @@ public class AttackResponse {
 
     private long attackTime;
     private String fleetSend;
+    private String userVictime;
 
     public AttackResponse(long attackTime, String fleetSend) {
         this.attackTime = attackTime;
@@ -31,5 +32,13 @@ public class AttackResponse {
 
     public void setFleetSend(String fleetSend) {
         this.fleetSend = fleetSend;
+    }
+
+    public String getUserVictime() {
+        return userVictime;
+    }
+
+    public void setUserVictime(String userVictime) {
+        this.userVictime = userVictime;
     }
 }

@@ -7,14 +7,11 @@ import java.util.ArrayList;
  */
 
 public class ShipsAttack {
-    private ArrayList<Ship> Ship;
     private Integer shipId;
     private Integer amount;
 
 
-    public ShipsAttack(Integer shipId, Integer amount) {
-        this.shipId = shipId;
-        this.amount = amount;
+    public ShipsAttack() {
     }
 
     public Integer getShipId() {
@@ -33,7 +30,4 @@ public class ShipsAttack {
         this.amount = amout;
     }
 
-    public void addShip(Ship ship){
-        this.Ship.add(ship);
-    }
 }

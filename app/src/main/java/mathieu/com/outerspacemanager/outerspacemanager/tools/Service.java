@@ -6,6 +6,7 @@ import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Building;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Buildings;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Fleet;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Galaxies;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Reports;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Search;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Searches;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Ship;
@@ -73,7 +74,7 @@ public interface Service {
 
 
     //Recupère les reports
-    @GET("/api/v1/ships")
-    Call<Fleet> getReports(@Header("x-access-token") String token);
+    @GET("/api/v1/reports/{from}/{limit}")
+    Call<Reports> getReports(@Header("x-access-token") String token, @Path("from") Integer from, @Path("limit") Integer limit);
 
 }

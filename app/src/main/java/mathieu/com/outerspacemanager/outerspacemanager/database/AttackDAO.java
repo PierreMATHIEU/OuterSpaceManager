@@ -20,7 +20,7 @@ public class AttackDAO {
     // Database fields
     private SQLiteDatabase database;
     private SqlDatabase dbHelper;
-    private String[] allColumns = { SqlDatabase.KEY_TIME, SqlDatabase.KEY_FLEET };
+    private String[] allColumns = { SqlDatabase.KEY_TIME, SqlDatabase.KEY_FLEET, SqlDatabase.KEY_USER };
     public AttackDAO(Context context) {
         dbHelper = new SqlDatabase(context);
     }
@@ -31,10 +31,11 @@ public class AttackDAO {
         dbHelper.close();
     }
 
-    public AttackResponse createAttack(Long time, String fleet) {
+    public AttackResponse createAttack(Long time, String fleet, String userVictime) {
         ContentValues values = new ContentValues();
         values.put(SqlDatabase.KEY_TIME, time);
         values.put(SqlDatabase.KEY_FLEET, fleet);
+        values.put(SqlDatabase.KEY_USER, userVictime);
         database.insert(SqlDatabase.ATTACK_TABLE_NAME, null,
                 values);
         Cursor cursor = database.query(SqlDatabase.ATTACK_TABLE_NAME,
@@ -45,8 +46,8 @@ public class AttackDAO {
         cursor.close();
         return newAttack;
     }
-    public List<AttackResponse> getAllAttacks() {
-        List<AttackResponse> lesAttacks = new ArrayList<AttackResponse>();
+    public ArrayList<AttackResponse> getAllAttacks() {
+        ArrayList<AttackResponse> lesAttacks = new ArrayList<AttackResponse>();
         Cursor cursor = database.query(SqlDatabase.ATTACK_TABLE_NAME,
                 allColumns, null, null, null, null, null);
         cursor.moveToFirst();
@@ -63,6 +64,7 @@ public class AttackDAO {
         AttackResponse comment = new AttackResponse();
         comment.setAttackTime(cursor.getLong(0));
         comment.setFleetSend(cursor.getString(1));
+        comment.setUserVictime(cursor.getString(2));
         return comment;
     }
     public void deleteAttack(AttackResponse unAttack) {

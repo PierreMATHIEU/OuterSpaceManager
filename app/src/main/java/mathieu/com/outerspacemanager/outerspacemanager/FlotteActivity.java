@@ -19,11 +19,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.AttackResponse;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Fleet;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Ship;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.ShipsAttack;
 import mathieu.com.outerspacemanager.outerspacemanager.database.AttackDAO;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.OnAttackClickListener;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
@@ -50,6 +53,7 @@ public class FlotteActivity extends AppCompatActivity implements OnAttackClickLi
     private Fleet shipsAAttack = new Fleet();
     private String userName;
     private ArrayList<Ship> listShip;
+    private ShipsAttack theShipAttack;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -166,13 +170,19 @@ public class FlotteActivity extends AppCompatActivity implements OnAttackClickLi
                             @Override
                             public void onResponse(Call<AttackResponse> call, Response<AttackResponse> response) {
                                 if (response.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), String.format("Attaque en cours"), Toast.LENGTH_SHORT).show();
+
+
+                                    AttackDAO attackDB = new AttackDAO(getApplicationContext());
+                                    //JSON Sérialisation
+                                    Gson gson = new Gson();
+                                    String json = gson.toJson(shipsAAttack);
 
                                     //DATABASE
-                                    AttackDAO attackDB = new AttackDAO(getApplicationContext());
                                     attackDB.open();
-                                    attackDB.createAttack(response.body().getAttackTime(),"");
+                                    attackDB.createAttack(response.body().getAttackTime(),json, userName.toString());
                                     attackDB.close();
+
+                                    Toast.makeText(getApplicationContext(), String.format("Attaque en cours"), Toast.LENGTH_SHORT).show();
 
                                 }else{
                                     Toast.makeText(getApplicationContext(), String.format("Erreur lors de l'attaque"), Toast.LENGTH_SHORT).show();
