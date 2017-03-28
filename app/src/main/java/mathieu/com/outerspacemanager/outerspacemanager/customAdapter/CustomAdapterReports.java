@@ -1,4 +1,4 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.customAdapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,7 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import mathieu.com.outerspacemanager.outerspacemanager.R;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Report;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.ShipInBattle;
 
 /**
  * Created by Piou on 20/03/2017.
@@ -25,6 +27,7 @@ public class CustomAdapterReports extends ArrayAdapter<Report> {
     private final Context context;
     private final ArrayList<Report> values;
     private Report myReport;
+    private ShipInBattle myBattleShip;
 
     public CustomAdapterReports(Context context, ArrayList<Report> values) {
         super(context, R.layout.custom_adaptergenerale, values);
@@ -52,11 +55,12 @@ public class CustomAdapterReports extends ArrayAdapter<Report> {
         TextView txt_ReportVaisseauTarget = (TextView)rowView.findViewById(R.id.txt_ReportVaisseauTarget);
 
         txt_ReportTarget.setText("Défenseur : " + myReport.getTo());
+        txt_ReportsVaisseauLose.setText("  -> Vaisseau survivant : " + myReport.getDefenderFleetAfterBattle().getSurvivingShips());
         txt_ReportFrom.setText("Attaquant : " + myReport.getFrom());
-        txt_ReportGas.setText("Gas won : " + myReport.getGasWon().toString());
-        txt_ReportMineral.setText("Minerals won : " + myReport.getMineralsWon().toString());
-        txt_ReportDateAttack.setText("Date : " + dateFormatted);
-        //txt_ReportsVaisseauLose.setText("Building time : " + myReport.get);
+        txt_ReportVaisseauTarget.setText("  -> Vaisseau survivant : " + myReport.getAttackerFleetAfterBattle().getSurvivingShips().toString());
+        txt_ReportGas.setText("Gas volé : " + String.valueOf(myReport.getGasWon()));
+        txt_ReportMineral.setText("Minerals volé : " + String.valueOf(myReport.getMineralsWon()));
+        txt_ReportDateAttack.setText("Date : " + dateFormatted.toString());
 
 
         return rowView;

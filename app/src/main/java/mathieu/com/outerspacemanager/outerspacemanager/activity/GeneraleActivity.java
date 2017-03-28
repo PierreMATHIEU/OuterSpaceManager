@@ -1,4 +1,4 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,11 +13,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Building;
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Buildings;
+import mathieu.com.outerspacemanager.outerspacemanager.R;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Report;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Reports;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
+import mathieu.com.outerspacemanager.outerspacemanager.customAdapter.CustomAdapterReports;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +46,7 @@ public class GeneraleActivity extends Activity {
     private ArrayList<Report> myReport;
     private Report theReport;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,11 @@ public class GeneraleActivity extends Activity {
         btn_GeneralReport = (Button)findViewById(R.id.btn_GeneralRapport);
         list_GeneralReport = (ListView)findViewById(R.id.list_GeneralReport);
 
+
+        //Function
+        showAll();
+        generalListView();
+
         btn_GeneralReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +74,10 @@ public class GeneraleActivity extends Activity {
             }
         });
 
+
+
+    }
+    public void showAll(){
         //Token
         SharedPreferences settings = getSharedPreferences(PREFS_TOKEN, 0);
         token = settings.getString(PREFS_TOKEN, new String());
@@ -108,8 +118,6 @@ public class GeneraleActivity extends Activity {
 
             }
         });
-        generalListView();
-
     }
     public void generalListView(){
         //Token

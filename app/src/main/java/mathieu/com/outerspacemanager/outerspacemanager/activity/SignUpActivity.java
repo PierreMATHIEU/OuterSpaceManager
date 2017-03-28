@@ -1,16 +1,18 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.activity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import mathieu.com.outerspacemanager.outerspacemanager.R;
+import mathieu.com.outerspacemanager.outerspacemanager.activity.ConnectActivity;
+import mathieu.com.outerspacemanager.outerspacemanager.activity.MainActivity;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
 import retrofit2.Call;
@@ -27,6 +29,7 @@ public class SignUpActivity extends Activity {
 
     private EditText etIdentifiant;
     private EditText etPassword;
+    private EditText etEmail;
     private Button btnValider;
     private Button btnConnect;
     private User user;
@@ -50,6 +53,7 @@ public class SignUpActivity extends Activity {
 
         etIdentifiant = (EditText)findViewById(R.id.etIdentifiant);
         etPassword = (EditText)findViewById(R.id.etPassword);
+        etEmail = (EditText)findViewById(R.id.etEmail);
         btnValider = (Button)findViewById(R.id.btnValider);
         btnConnect = (Button)findViewById(R.id.btn_Connect);
 
@@ -57,7 +61,7 @@ public class SignUpActivity extends Activity {
 
         btnValider.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                user = new User(etIdentifiant.getText().toString(),etPassword.getText().toString(), 0.00,0.00);
+                user = new User(etIdentifiant.getText().toString(),etPassword.getText().toString(),etEmail.getText().toString(), 0.00,0.00);
                 retrofit = new Retrofit.Builder()
                         .baseUrl("https://outer-space-manager.herokuapp.com")
                         .addConverterFactory(GsonConverterFactory.create())
@@ -70,7 +74,6 @@ public class SignUpActivity extends Activity {
                     //Réponce OK
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
-                        Log.d("plop", response.toString());
                         if (response.isSuccessful()) {
                             //Stocke le token dans la BDD
                             SharedPreferences settings = getSharedPreferences(PREFS_TOKEN, 0);

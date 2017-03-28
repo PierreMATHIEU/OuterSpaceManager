@@ -1,4 +1,4 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import mathieu.com.outerspacemanager.outerspacemanager.R;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
 import retrofit2.Call;
@@ -27,6 +28,7 @@ public class ConnectActivity extends Activity {
     private Button btnConnect;
     private EditText username;
     private EditText password;
+    private EditText email;
 
     private User user;
     private Retrofit retrofit;
@@ -39,6 +41,7 @@ public class ConnectActivity extends Activity {
 
         username = (EditText)findViewById(R.id.et_ConnectUsername);
         password = (EditText)findViewById(R.id.et_ConnectPassword);
+        email = (EditText)findViewById(R.id.et_ConnectEmail);
         btnConnect = (Button)findViewById(R.id.btn_Connect);
 
 
@@ -46,7 +49,7 @@ public class ConnectActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                user = new User(username.getText().toString(), password.getText().toString(), 0.00,0.00);
+                user = new User(username.getText().toString(), password.getText().toString(),email.getText().toString(), 0.00,0.00);
 
                 retrofit = new Retrofit.Builder()
                         .baseUrl("https://outer-space-manager.herokuapp.com")

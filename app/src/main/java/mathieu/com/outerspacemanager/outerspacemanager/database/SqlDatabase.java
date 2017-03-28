@@ -11,7 +11,7 @@ import android.os.Environment;
 
 public class SqlDatabase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "MyDBAttackWithUser.db";
+    private static final String DATABASE_NAME = "OuterSpaceManagerAttack.db";
     public static final String ATTACK_TABLE_NAME = "Attack";
     public static final String KEY_TIME = "date";
     public static final String KEY_FLEET = "fleet";

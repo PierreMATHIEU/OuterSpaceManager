@@ -6,5 +6,5 @@ package mathieu.com.outerspacemanager.outerspacemanager.tools;
 
 public interface OnAttackClickListener {
 
-    void onAttackClickListener(int id, Integer amount);
+    void onAttackClickListener(int id, String name, Integer amount);
 }

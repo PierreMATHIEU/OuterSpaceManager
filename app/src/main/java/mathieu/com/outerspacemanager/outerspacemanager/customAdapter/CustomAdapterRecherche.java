@@ -1,4 +1,4 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.customAdapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import mathieu.com.outerspacemanager.outerspacemanager.R;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Search;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.OnItemClickListener;
 

@@ -1,23 +1,31 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Amount;
+import mathieu.com.outerspacemanager.outerspacemanager.R;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.AttackResponse;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Fleet;
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Search;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Ship;
-import mathieu.com.outerspacemanager.outerspacemanager.tools.OnItemClickListener;
-import mathieu.com.outerspacemanager.outerspacemanager.tools.OnShipIncrementClick;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.ShipsAttack;
+import mathieu.com.outerspacemanager.outerspacemanager.customAdapter.CustomAdapterFlotte;
+import mathieu.com.outerspacemanager.outerspacemanager.database.AttackDAO;
+import mathieu.com.outerspacemanager.outerspacemanager.tools.OnAttackClickListener;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,10 +34,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Piou on 14/03/2017.
+ * Created by Piou on 13/03/2017.
  */
 
-public class ChantierSpatialActivity extends AppCompatActivity implements OnShipIncrementClick {
+public class FlotteActivity extends AppCompatActivity implements OnAttackClickListener{
 
     public static final String PREFS_TOKEN = "token";
     private Retrofit retrofit;
@@ -37,18 +45,40 @@ public class ChantierSpatialActivity extends AppCompatActivity implements OnShip
     private ArrayList<Ship> myShip;
     private Ship theShip;
     private Integer theAmount;
+    private Integer theNumberOfItem;
+    private Integer thePosition;
+    private Fleet shipsAAttack = new Fleet();
+    private String userName;
+    private ArrayList<Ship> listShip;
+    private ShipsAttack theShipAttack;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Button btn_FlotteAtack;
+    private EditText edit_FlotteUser;
 
+    private AttackDAO myDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chantierspatial);
+        setContentView(R.layout.activity_flotte);
+        btn_FlotteAtack =(Button)findViewById(R.id.btn_FlotteAttack);
+        edit_FlotteUser = (EditText)findViewById(R.id.edit_FlotteUser);
+
+
+
+        btn_FlotteAtack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userName = edit_FlotteUser.getText().toString();
+                attackShipsManager();
+            }
+        });
+
 
         //Recycler View
-        mRecyclerView = (RecyclerView) findViewById(R.id.rc_ListShips);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rc_flotte);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Token
@@ -61,7 +91,7 @@ public class ChantierSpatialActivity extends AppCompatActivity implements OnShip
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Service service = retrofit.create(Service.class);
-        Call<Fleet> request = service.getShips(token);
+        Call<Fleet> request = service.getFleet(token);
 
         request.enqueue(new Callback<Fleet>(){
 
@@ -70,17 +100,17 @@ public class ChantierSpatialActivity extends AppCompatActivity implements OnShip
             public void onResponse(Call<Fleet> call, Response<Fleet> response) {
                 if (response.isSuccessful()) {
                     myShip = response.body().getShips();
-                    if(response.body().getSize() != 0){
+                    if(response.body().getNumberOfShip() > 0){
 
-                        CustomAdapterChantier myCustomAdapterRecherche = new CustomAdapterChantier(response.body().getShips(), ChantierSpatialActivity.this);
+                        CustomAdapterFlotte myCustomAdapterFlotte = new CustomAdapterFlotte(response.body().getShips(), FlotteActivity.this);
 
                         //Envoie l'activité au listener
-                        myCustomAdapterRecherche.setMyShipClicked(ChantierSpatialActivity.this);
-                        mRecyclerView.setAdapter(myCustomAdapterRecherche);
-                    }else{
-                        Toast.makeText(getApplicationContext(), String.format("Il n'y a pas de vaisseaux pour le moment"), Toast.LENGTH_SHORT).show();
-                    }
+                        myCustomAdapterFlotte.setMyAttackListener(FlotteActivity.this);
+                        mRecyclerView.setAdapter(myCustomAdapterFlotte);
 
+                    }else{
+                        Toast.makeText(getApplicationContext(), String.format("Vous n'avez pas de vaisseaux"), Toast.LENGTH_SHORT).show();
+                    }
                 }else{
                     Toast.makeText(getApplicationContext(), String.format("Erreur de récupération des vaisseaux"), Toast.LENGTH_SHORT).show();
                 }
@@ -97,20 +127,20 @@ public class ChantierSpatialActivity extends AppCompatActivity implements OnShip
 
             }
         });
-
     }
 
     @Override
-    public void onShipIncrementClick(int position, Integer amount) {
-        theShip = myShip.get(position);
+    public void onAttackClickListener(int id,String name, Integer amount) {
+        Ship newShip = new Ship(id,name,amount);
+        shipsAAttack.addShip(newShip);
         theAmount = amount;
-        createShipsManager();
+
     }
 
-    public void createShipsManager(){
+    public void attackShipsManager(){
         new AlertDialog.Builder(this)
-                .setTitle("Créer")
-                .setMessage("Créer le vaisseau "+ theShip.getName() + " ?")
+                .setTitle("Attaquer")
+                .setMessage("Voulez vous attaquer ?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -119,22 +149,35 @@ public class ChantierSpatialActivity extends AppCompatActivity implements OnShip
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         Service service = retrofit.create(Service.class);
-                        Call<Ship> request = service.createShips(token, theShip.getShipId(), new Amount(theAmount));
+                        Call<AttackResponse> request = service.attackUser(token, userName, shipsAAttack);
 
-                        request.enqueue(new Callback<Ship>(){
+                        request.enqueue(new Callback<AttackResponse>(){
 
                             @Override
-                            public void onResponse(Call<Ship> call, Response<Ship> response) {
+                            public void onResponse(Call<AttackResponse> call, Response<AttackResponse> response) {
                                 if (response.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), String.format("Création des vaisseaux en cours"), Toast.LENGTH_SHORT).show();
+
+
+                                    AttackDAO attackDB = new AttackDAO(getApplicationContext());
+                                    //JSON Sérialisation
+                                    Gson gson = new Gson();
+                                    String json = gson.toJson(shipsAAttack);
+
+                                    //DATABASE
+                                    attackDB.open();
+                                    attackDB.createAttack(response.body().getAttackTime(),json, userName.toString());
+                                    attackDB.close();
+
+                                    Toast.makeText(getApplicationContext(), String.format("Attaque en cours"), Toast.LENGTH_SHORT).show();
+
                                 }else{
-                                    Toast.makeText(getApplicationContext(), String.format("Erreur lors de la création"), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), String.format("Erreur lors de l'attaque"), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<Ship> call, Throwable t) {
-                                Toast.makeText(getApplicationContext(), String.format("Erreur lors de la création !!fatal"), Toast.LENGTH_SHORT).show();
+                            public void onFailure(Call<AttackResponse> call, Throwable t) {
+                                Toast.makeText(getApplicationContext(), String.format("Erreur lors de l'attaque !!fatal"), Toast.LENGTH_SHORT).show();
 
                             }
                         });
@@ -148,4 +191,6 @@ public class ChantierSpatialActivity extends AppCompatActivity implements OnShip
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
+
 }

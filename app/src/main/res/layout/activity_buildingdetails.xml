@@ -4,10 +4,9 @@
     android:layout_height="match_parent">
 
     <fragment
-        android:id="@+id/frag_BuildingList"
+        android:id="@+id/frag_BuildingDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="mathieu.com.outerspacemanager.outerspacemanager.fragments.FragmentBuildingList"/>
-
+        android:name="mathieu.com.outerspacemanager.outerspacemanager.fragments.FragmentBuildingDetails"/>
 
 </LinearLayout>

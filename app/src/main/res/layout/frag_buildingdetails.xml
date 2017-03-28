@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_GeneraleReportTime"
-        android:textAlignment="center" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/imageViewBuilding"
+        android:layout_height="100dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txt_GeneraleReportShip"
+        android:id="@+id/txt_BuildingFragName"
         android:textAlignment="center" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txt_GeneraleReportShipName"
+        android:id="@+id/txt_BuildingFragTime"
+        android:textAlignment="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_BuildingFragGazCost"
+        android:textAlignment="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_BuildingFragMineralCost"
         android:textAlignment="center" />
 
-    <TextView
+    <Button
+        android:text="Create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txt_GeneraleReportUsername"
-        android:textAlignment="center" />
+        android:id="@+id/btn_BuildingDetailCreate"
+        android:backgroundTint="@color/colorGreyDark"
+        android:textColor="@color/colorWithe"/>
 </LinearLayout>

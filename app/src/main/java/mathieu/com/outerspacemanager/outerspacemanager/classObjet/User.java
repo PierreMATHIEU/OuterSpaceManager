@@ -10,6 +10,7 @@ public class User {
 
     private String username;
     private String password;
+    private String email;
     private String token;
     private Double points;
     private Double gas;
@@ -17,9 +18,10 @@ public class User {
     private Integer gasModifier;
     private Integer mineralsModifier;
 
-    public User(String username, String password, Double gas, Double minerals){
+    public User(String username, String password,String email, Double gas, Double minerals){
         this.username = username;
         this.password = password;
+        this.email = email;
         this.token = token;
         this.gas = gas;
         this.minerals = minerals;
@@ -34,5 +36,6 @@ public class User {
     public String getMinerals(){ return this.minerals.toString(); }
     public String getGasMod(){ return this.gasModifier.toString(); }
     public String getMineralMod(){ return this.mineralsModifier.toString(); }
+
 
 }

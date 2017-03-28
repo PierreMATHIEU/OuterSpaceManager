@@ -1,4 +1,4 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +9,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import mathieu.com.outerspacemanager.outerspacemanager.R;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Galaxies;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.User;
+import mathieu.com.outerspacemanager.outerspacemanager.customAdapter.CustomAdapterGalaxie;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
 import retrofit2.Call;
 import retrofit2.Callback;

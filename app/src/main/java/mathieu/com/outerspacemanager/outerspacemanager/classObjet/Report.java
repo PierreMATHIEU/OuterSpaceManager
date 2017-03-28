@@ -11,10 +11,28 @@ public class Report {
     private long date;
     private long dateInv;
     private String from;
-    private Integer gasWon;
-    private Integer mineralsWon;
+    private double gasWon;
+    private double mineralsWon;
     private String to;
     private String type;
+    private ShipInBattle attackerFleetAfterBattle;
+    private ShipInBattle defenderFleetAfterBattle;
+
+    public ShipInBattle getAttackerFleetAfterBattle() {
+        return attackerFleetAfterBattle;
+    }
+
+    public void setAttackerFleetAfterBattle(ShipInBattle attackerFleetAfterBattle) {
+        this.attackerFleetAfterBattle = attackerFleetAfterBattle;
+    }
+
+    public ShipInBattle getDefenderFleetAfterBattle() {
+        return defenderFleetAfterBattle;
+    }
+
+    public void setDefenderFleetAfterBattle(ShipInBattle defenderFleetAfterBattle) {
+        this.defenderFleetAfterBattle = defenderFleetAfterBattle;
+    }
 
     public Report() {
 
@@ -44,7 +62,7 @@ public class Report {
         this.from = from;
     }
 
-    public Integer getGasWon() {
+    public double getGasWon() {
         return gasWon;
     }
 
@@ -52,7 +70,7 @@ public class Report {
         this.gasWon = gasWon;
     }
 
-    public Integer getMineralsWon() {
+    public double getMineralsWon() {
         return mineralsWon;
     }
 
@@ -75,4 +93,5 @@ public class Report {
     public void setType(String type) {
         this.type = type;
     }
+
 }

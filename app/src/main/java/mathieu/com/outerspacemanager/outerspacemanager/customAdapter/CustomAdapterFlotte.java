@@ -1,4 +1,4 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.customAdapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import mathieu.com.outerspacemanager.outerspacemanager.R;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Ship;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.OnAttackClickListener;
-import mathieu.com.outerspacemanager.outerspacemanager.tools.OnItemClickListener;
 
 /**
  * Created by Piou on 13/03/2017.
@@ -67,7 +66,7 @@ public class CustomAdapterFlotte extends RecyclerView.Adapter<CustomAdapterFlott
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                myAttackListener.onAttackClickListener(ship.getShipId(), Integer.parseInt(s.toString()));
+                myAttackListener.onAttackClickListener(ship.getShipId(), ship.getName(),Integer.parseInt(s.toString()));
             }
 
             @Override

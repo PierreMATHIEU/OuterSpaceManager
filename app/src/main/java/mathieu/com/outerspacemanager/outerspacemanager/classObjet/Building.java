@@ -1,11 +1,13 @@
 package mathieu.com.outerspacemanager.outerspacemanager.classObjet;
 
 
+import java.io.Serializable;
+
 /**
  * Created by Piou on 07/03/2017.
  */
 
-public class Building  {
+public class Building implements Serializable {
 
     private Integer buildingId;
     private Integer amountOfEffectByLevel;

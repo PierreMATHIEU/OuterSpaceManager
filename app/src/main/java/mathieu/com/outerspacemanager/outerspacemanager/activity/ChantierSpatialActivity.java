@@ -1,24 +1,23 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Building;
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Search;
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Searches;
-import mathieu.com.outerspacemanager.outerspacemanager.tools.OnItemClickListener;
+import mathieu.com.outerspacemanager.outerspacemanager.R;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Amount;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Fleet;
+import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Ship;
+import mathieu.com.outerspacemanager.outerspacemanager.customAdapter.CustomAdapterChantier;
+import mathieu.com.outerspacemanager.outerspacemanager.tools.OnShipIncrementClick;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,25 +29,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Piou on 14/03/2017.
  */
 
-public class RechercheActivity extends AppCompatActivity implements OnItemClickListener {
+public class ChantierSpatialActivity extends AppCompatActivity implements OnShipIncrementClick {
 
     public static final String PREFS_TOKEN = "token";
     private Retrofit retrofit;
     public String token;
-    private ArrayList<Search> mySearch;
-    private Search theSearch;
+    private ArrayList<Ship> myShip;
+    private Ship theShip;
+    private Integer theAmount;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recherche);
+        setContentView(R.layout.activity_chantierspatial);
 
         //Recycler View
-        mRecyclerView = (RecyclerView) findViewById(R.id.rc_RechercheList);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rc_ListShips);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Token
@@ -61,35 +61,35 @@ public class RechercheActivity extends AppCompatActivity implements OnItemClickL
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Service service = retrofit.create(Service.class);
-        Call<Searches> request = service.getSearch(token);
+        Call<Fleet> request = service.getShips(token);
 
-        request.enqueue(new Callback<Searches>(){
+        request.enqueue(new Callback<Fleet>(){
 
             //Réponce OK -> Peuple la ReciclerView
             @Override
-            public void onResponse(Call<Searches> call, Response<Searches> response) {
+            public void onResponse(Call<Fleet> call, Response<Fleet> response) {
                 if (response.isSuccessful()) {
-                    mySearch = response.body().getSearches();
+                    myShip = response.body().getShips();
                     if(response.body().getSize() != 0){
 
-                        CustomAdapterRecherche myCustomAdapterRecherche = new CustomAdapterRecherche(response.body().getSearches(), RechercheActivity.this);
+                        CustomAdapterChantier myCustomAdapterRecherche = new CustomAdapterChantier(response.body().getShips(), ChantierSpatialActivity.this);
 
                         //Envoie l'activité au listener
-                        myCustomAdapterRecherche.setMyListener(RechercheActivity.this);
+                        myCustomAdapterRecherche.setMyShipClicked(ChantierSpatialActivity.this);
                         mRecyclerView.setAdapter(myCustomAdapterRecherche);
                     }else{
-                        Toast.makeText(getApplicationContext(), String.format("Il n'y a pas de recherches"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), String.format("Il n'y a pas de vaisseaux pour le moment"), Toast.LENGTH_SHORT).show();
                     }
 
                 }else{
-                    Toast.makeText(getApplicationContext(), String.format("Erreur de récupération des recherches"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), String.format("Erreur de récupération des vaisseaux"), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Searches> call, Throwable t) {
+            public void onFailure(Call<Fleet> call, Throwable t) {
                 Context context = getApplicationContext();
-                CharSequence text = "Erreur de récupération des recherches!!! Noob !!";
+                CharSequence text = "Erreur de récupération des vaisseaux !!! Noob !!";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
@@ -97,18 +97,20 @@ public class RechercheActivity extends AppCompatActivity implements OnItemClickL
 
             }
         });
-    }
-    //callback == évènement
-    @Override
-    public void onItemClick(int position) {
-        theSearch = mySearch.get(position);
-        searchManager();
+
     }
 
-    public void searchManager(){
+    @Override
+    public void onShipIncrementClick(int position, Integer amount) {
+        theShip = myShip.get(position);
+        theAmount = amount;
+        createShipsManager();
+    }
+
+    public void createShipsManager(){
         new AlertDialog.Builder(this)
-                .setTitle("Recherche")
-                .setMessage("Améliorer "+ theSearch.getName() + " ?")
+                .setTitle("Créer")
+                .setMessage("Créer le vaisseau "+ theShip.getName() + " ?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -117,23 +119,22 @@ public class RechercheActivity extends AppCompatActivity implements OnItemClickL
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         Service service = retrofit.create(Service.class);
-                        Call<Search> request = service.doSearch(token, theSearch.getSearchId());
+                        Call<Ship> request = service.createShips(token, theShip.getShipId(), new Amount(theAmount));
 
-                        request.enqueue(new Callback<Search>(){
+                        request.enqueue(new Callback<Ship>(){
 
                             @Override
-                            public void onResponse(Call<Search> call, Response<Search> response) {
+                            public void onResponse(Call<Ship> call, Response<Ship> response) {
                                 if (response.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), String.format("Recherche en cours"), Toast.LENGTH_SHORT).show();
-
+                                    Toast.makeText(getApplicationContext(), String.format("Création des vaisseaux en cours"), Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(getApplicationContext(), String.format("Erreur lors de la recherche"), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), String.format("Erreur lors de la création"), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<Search> call, Throwable t) {
-                                Toast.makeText(getApplicationContext(), String.format("Erreur lors de la recherche !!fatal"), Toast.LENGTH_SHORT).show();
+                            public void onFailure(Call<Ship> call, Throwable t) {
+                                Toast.makeText(getApplicationContext(), String.format("Erreur lors de la création !!fatal"), Toast.LENGTH_SHORT).show();
 
                             }
                         });

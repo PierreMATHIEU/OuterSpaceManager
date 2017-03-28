@@ -20,8 +20,9 @@ public class Ship {
     private Integer spatioportLevelNeeded;
 
 
-    public Ship(int id, int amount){
+    public Ship(int id, String name, int amount){
         this.shipId = id;
+        this.name = name;
         this.amount = amount;
     }
 

@@ -11,10 +11,20 @@
         android:textColor="@android:color/black" />
 
     <TextView
-        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_ReportsVaisseauLose"
+        android:textColor="@android:color/black"/>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txt_ReportFrom"
+        android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_ReportVaisseauTarget"
         android:textColor="@android:color/black"/>
 
     <TextView
@@ -35,15 +45,7 @@
         android:id="@+id/txt_ReportDateAttack"
         android:textColor="@android:color/black"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_ReportsVaisseauLose"
-        android:textColor="@android:color/black"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_ReportVaisseauTarget"
-        android:textColor="@android:color/black"/>
+
+
 </LinearLayout>

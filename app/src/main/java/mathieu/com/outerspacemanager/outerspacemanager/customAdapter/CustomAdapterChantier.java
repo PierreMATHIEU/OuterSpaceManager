@@ -1,18 +1,16 @@
-package mathieu.com.outerspacemanager.outerspacemanager;
+package mathieu.com.outerspacemanager.outerspacemanager.customAdapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Building;
+import mathieu.com.outerspacemanager.outerspacemanager.R;
 import mathieu.com.outerspacemanager.outerspacemanager.classObjet.Ship;
 import mathieu.com.outerspacemanager.outerspacemanager.tools.OnShipIncrementClick;
 
@@ -57,7 +55,9 @@ public class CustomAdapterChantier extends RecyclerView.Adapter<CustomAdapterCha
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myShipClicked.onShipIncrementClick(position, Integer.parseInt(holder.edit_ChantierAmount.getText().toString()));
+                if(holder.edit_ChantierAmount.getText().length() != 0){
+                    myShipClicked.onShipIncrementClick(position, Integer.parseInt(holder.edit_ChantierAmount.getText().toString()));
+                }
             }
         });
 
